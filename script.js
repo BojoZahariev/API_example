@@ -1,8 +1,9 @@
 const img = document.getElementById('img');
 const buttonNewGif = document.getElementById('newGif');
-let keyWord = 'dog';
+const buttonSubmit = document.getElementById('submit');
+const input1 = document.getElementById('input1');
 
-const giffys = () => {
+const giffys = keyWord => {
   fetch('https://api.giphy.com/v1/gifs/translate?api_key=B2sknp7nYaRlopzefXO01xnnlFymv0zN&s=' + keyWord, {
     mode: 'cors'
   })
@@ -16,6 +17,12 @@ const giffys = () => {
     .catch(err => alert(err));
 };
 
-giffys();
+giffys('dog');
 
-buttonNewGif.addEventListener('click', giffys);
+buttonNewGif.addEventListener('click', () => {
+  giffys(input1.value);
+});
+
+buttonSubmit.addEventListener('click', () => {
+  giffys(input1.value);
+});
