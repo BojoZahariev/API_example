@@ -3,24 +3,27 @@ const buttonNewGif = document.getElementById('newGif');
 const buttonSubmit = document.getElementById('submit');
 const input1 = document.getElementById('input1');
 
-const giffys = keyWord => {
-  fetch('https://api.giphy.com/v1/gifs/translate?api_key=B2sknp7nYaRlopzefXO01xnnlFymv0zN&s=' + keyWord, {
-    mode: 'cors'
-  })
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(response) {
-      img.src = response.data.images.original.url;
-    })
+const giffys = async keyWord => {
+  const response = await fetch(
+    'https://api.giphy.com/v1/gifs/translate?api_key=B2sknp7nYaRlopzefXO01xnnlFymv0zN&s=' + keyWord,
+    {
+      mode: 'cors'
+    }
+  );
+  const gifData = await response.json();
+  img.src = gifData.data.images.original.url;
 
-    .catch(err => alert(err));
+  response.catch(err => alert(err));
 };
 
 giffys('dog');
 
 buttonNewGif.addEventListener('click', () => {
-  giffys(input1.value);
+  if (input1.value) {
+    giffys(input1.value);
+  } else {
+    giffys('dog');
+  }
 });
 
 buttonSubmit.addEventListener('click', () => {
